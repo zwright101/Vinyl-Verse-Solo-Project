@@ -19,8 +19,13 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import AddRecord from '../AddRecord/AddRecord';
+import AddCustomRecord from '../AddCustomRecord/AddCustomRecord';
+import RecordDetails from '../RecordDetails/RecordDetails';
 
 import './App.css';
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -109,6 +114,30 @@ function App() {
               <LandingPage />
             }
           </Route>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/add-record"
+          >
+            <AddRecord />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/add-custom-record"
+          >
+            <AddCustomRecord />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/record-details"
+          >
+            <RecordDetails />
+          </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
