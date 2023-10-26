@@ -42,14 +42,14 @@ router.post('/', (req, res) => {
     console.log('Testing:', req.body);
     console.log("User ID is: ", req.user.id);
     // Parse the date as a string
-    const parsedReleaseDate = new Date(newRecord.releaseDate).toISOString();
+    const newReleaseDate = new Date(newRecord.releaseDate).toISOString();
     const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist")
                        VALUES ($1, $2, $3, $4, $5);`;
     const queryValues = [
       req.user.id,
       newRecord.artistName,
       newRecord.albumName,
-      parsedReleaseDate,
+      newReleaseDate,
       newRecord.tracklist
     ];
     pool.query(queryText, queryValues)
