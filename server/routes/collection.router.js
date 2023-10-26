@@ -22,18 +22,30 @@ router.get('/', (req, res) => {
  * POST route template
  */
 router.post('/', (req, res) => {
-  // POST route code here
-  const collection = [req.body.user_id, req.body.artist_name, req.body.album_name, req.body.release_date, req.body.tracklist];
-  console.log(req.body);
-  const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist")
-                     VALUES ($1, $2, $3, $4, $5);`;
-  pool.query(queryText, collection).then((result) => {
-    res.sendStatus(200);
-  })
-  .catch((error) => {
-    console.log("Error POSTING collection: ", error);
-    res.sendStatus(500);
-  })
-});
+    // POST route code here
+    const newRecord = req.body;
+    console.log('Testing:', req.body);
+    console.log("User ID is: ", req.user.id);
+    // Parse the date as a string
+    const parsedReleaseDate = new Date(newRecord.releaseDate).toISOString();
+    const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist")
+                       VALUES ($1, $2, $3, $4, $5);`;
+    const queryValues = [
+      req.user.id,
+      newRecord.artistName,
+      newRecord.albumName,
+      parsedReleaseDate,
+      newRecord.tracklist
+    ];
+    pool.query(queryText, queryValues)
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log('Error POSTING new record: ', error);
+      });
+  });
+  
+
 
 module.exports = router;

@@ -11,7 +11,7 @@ function* addRecord(action) {
 }
 
 function* addRecordSaga() {
-    yield takeEvery('ADD_RECORD', addRecord)
+    yield takeEvery('ADD_NEW_RECORD', addRecord)
 }
 
 export default addRecordSaga

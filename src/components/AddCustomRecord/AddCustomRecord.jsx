@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'; // import dispatch from react-redux
+import { useDispatch, useSelector } from 'react-redux'; 
 import { useHistory } from 'react-router-dom';
 
 function AddCustomRecord() {
@@ -10,14 +10,13 @@ function AddCustomRecord() {
 
   const dispatch = useDispatch(); 
 
-  const addRecord = (newRecord) => {
-    return {
-      type: 'ADD_RECORD',
-      payload: newRecord,
-    };
-  };
+  const addRecord = (newRecord) => ({
+    type: 'ADD_RECORD',
+    payload: newRecord,
+  });
+  
 
-  const handleSubmit = (e) => {
+  const submitRecord = (e) => {
     e.preventDefault();
     const newRecord = {
       artistName,
@@ -25,11 +24,13 @@ function AddCustomRecord() {
       releaseDate,
       tracklist
     };
-    dispatch({ type: 'ADD_VINYL_RECORD', payload: newRecord });
+    dispatch({ type: 'ADD_NEW_RECORD', payload: newRecord });
   };
 
+  
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={submitRecord}>
       <input
         type="text"
         placeholder="Artist Name"
