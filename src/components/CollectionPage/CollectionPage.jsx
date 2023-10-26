@@ -28,17 +28,23 @@ function CollectionPage() {
   });
 
   // Sorting the collection based on the most recent albums added
-  const sortedCollection = [...sortedByArtist].sort((a, b) => new Date(b.added_date) - new Date(a.added_date));
-
   const mostRecentAlbums = userCollection
-  .sort((a, b) => new Date(b.added_date) - new Date(a.added_date))
-  .slice(0, 5);
+    .sort((a, b) => new Date(b.added_date) - new Date(a.added_date))
+    .slice(0, 5);
+
+  const deleteAlbum = (id) => {
+    dispatch({ type: 'DELETE_ALBUM', payload: id });
+  };
 
   const ImageCard = ({ item }) => {
     const [showDetails, setShowDetails] = useState(false);
 
     const handleCardClick = () => {
       setShowDetails(!showDetails);
+    };
+
+    const handleDelete = (id) => {
+      deleteAlbum(id);
     };
 
     return (
@@ -58,6 +64,7 @@ function CollectionPage() {
             <p>Album: {item.album_name}</p>
             <p>Release Date: {item.release_date}</p>
             <p>Tracklist: {item.tracklist}</p>
+            <button onClick={() => handleDelete(item.id)}>Delete</button>
           </div>
         )}
       </div>
