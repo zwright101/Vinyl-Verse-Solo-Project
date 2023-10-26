@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import AddRecord from '../AddRecord/AddRecord';
 import AddCustomRecord from '../AddCustomRecord/AddCustomRecord';
 import RecordDetails from '../RecordDetails/RecordDetails';
+import CollectionPage from '../CollectionPage/CollectionPage';
 
 import './App.css';
 
@@ -137,6 +138,14 @@ function App() {
             path="/record-details"
           >
             <RecordDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/collection"
+          >
+            <CollectionPage />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

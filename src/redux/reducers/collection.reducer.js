@@ -4,7 +4,9 @@ const albumList = (state = [], action) => {
             return action.payload;
         default:
             return state;
+            
     }
 }
+
 
 export default albumList;

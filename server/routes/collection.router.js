@@ -18,6 +18,21 @@ router.get('/', (req, res) => {
   })
 });
 
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+    const queryText = `SELECT * FROM "collection" 
+                       JOIN "user" ON "collection"."user_id" = "user"."id"
+                       WHERE "user"."id" = ${id}`
+    pool.query(queryText, [id])
+    .then((result) => {
+        res.send(result.rows);
+    })
+    .catch((error) => {
+        console.log('Error in getting specific collection' , error);
+        res.sendStatus(500)
+    })
+})
+
 /**
  * POST route template
  */

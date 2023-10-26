@@ -28,6 +28,10 @@ function Nav() {
               Home
             </Link>
 
+            <Link className="navLink" to="/collection">
+              My Collection
+            </Link>
+
             <Link className="navLink" to="/add-custom-record">
               Add a Record
             </Link>
