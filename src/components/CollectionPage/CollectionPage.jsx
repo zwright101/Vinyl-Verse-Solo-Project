@@ -16,6 +16,24 @@ function CollectionPage() {
 
   const userCollection = collection.filter((item) => item.user_id === user.id);
 
+  // Sorting the collection by artist name alphabetically
+  const sortedByArtist = [...userCollection].sort((a, b) => {
+    if (a.artist_name < b.artist_name) {
+      return -1;
+    }
+    if (a.artist_name > b.artist_name) {
+      return 1;
+    }
+    return 0;
+  });
+
+  // Sorting the collection based on the most recent albums added
+  const sortedCollection = [...sortedByArtist].sort((a, b) => new Date(b.added_date) - new Date(a.added_date));
+
+  const mostRecentAlbums = userCollection
+  .sort((a, b) => new Date(b.added_date) - new Date(a.added_date))
+  .slice(0, 5);
+
   const ImageCard = ({ item }) => {
     const [showDetails, setShowDetails] = useState(false);
 
@@ -48,9 +66,15 @@ function CollectionPage() {
 
   return (
     <div>
-      <h2>My Collection</h2>
+      <h2>Recently Added</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {userCollection.map((item, index) => (
+        {mostRecentAlbums.map((item, index) => (
+          <ImageCard key={item.id || index} item={item} />
+        ))}
+      </div>
+      <h2>My Full Collection</h2>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {sortedByArtist.map((item, index) => (
           <ImageCard key={item.id || index} item={item} />
         ))}
       </div>

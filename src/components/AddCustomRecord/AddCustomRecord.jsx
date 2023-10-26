@@ -25,6 +25,10 @@ function AddCustomRecord() {
       tracklist
     };
     dispatch({ type: 'ADD_NEW_RECORD', payload: newRecord });
+    setArtistName('');
+    setAlbumName('');
+    setReleaseDate('');
+    setTracklist('');
   };
 
   
