@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 function CollectionPage() {
   const dispatch = useDispatch();
   const collection = useSelector((store) => store.albumList);
+  const user = useSelector((store) => store.user); 
 
+  
   useEffect(() => {
     getAlbumList();
   }, []);
@@ -13,11 +15,13 @@ function CollectionPage() {
     dispatch({ type: 'FETCH_ALBUM_LIST' });
   };
 
+  const userCollection = collection.filter(item => item.user_id === user.id);
+
   return (
     <div>
-      <h2>Collection</h2>
+      <h2>My Collection</h2>
       <ul>
-        {collection.map(item => (
+        {userCollection.map(item => (
           <li key={item.id}>
             {/* Display the item details here */}
             <p>Artist: {item.artist_name}</p>
