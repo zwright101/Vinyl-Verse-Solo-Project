@@ -23,8 +23,10 @@ import AddRecord from '../AddRecord/AddRecord';
 import AddCustomRecord from '../AddCustomRecord/AddCustomRecord';
 import RecordDetails from '../RecordDetails/RecordDetails';
 import CollectionPage from '../CollectionPage/CollectionPage';
+import EditAlbumPage from '../EditAlbumPage/EditAlbumPage';
 
 import './App.css';
+
 
 
 
@@ -146,6 +148,14 @@ function App() {
             path="/collection"
           >
             <CollectionPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/edit-album"
+          >
+            <EditAlbumPage />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
