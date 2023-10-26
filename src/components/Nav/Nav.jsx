@@ -11,6 +11,9 @@ function Nav() {
     <div className="nav">
       <Link to="/home">
         <h2 className="nav-title">Vinyl Verse</h2>
+        {/* <div className="logo-container">
+        <img src="public/images/Vinyl Verse with Text.png" alt="Vinyl Verse Logo" className="Vinyl-Verse-Logo" />
+      </div> */}
       </Link>
       <div>
         {/* If no user is logged in, show these links */}

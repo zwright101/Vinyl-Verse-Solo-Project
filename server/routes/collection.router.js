@@ -60,6 +60,23 @@ router.post('/', (req, res) => {
         console.log('Error POSTING new record: ', error);
       });
   });
+
+
+  // PUT route 
+
+
+  // DELETE route
+
+  router.delete('/:id', (req, res) => {
+    const deleteId = req.params.id;
+    let queryText = `DELETE FROM "collection" WHERE "id"=$1;`;
+    pool.query(queryText, [deleteId]).then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log(`Error in DELETE ${error}`);
+        res.sendStatus(500);
+    })
+})
   
 
 
