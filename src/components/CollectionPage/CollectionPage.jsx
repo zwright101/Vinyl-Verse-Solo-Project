@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
 
 function CollectionPage() {
   const dispatch = useDispatch();
@@ -39,16 +39,21 @@ function CollectionPage() {
   };
 
   const ImageCard = ({ item }) => {
+    const history = useHistory();
     const [showDetails, setShowDetails] = useState(false);
-
+  
     const handleCardClick = () => {
       setShowDetails(!showDetails);
     };
-
+  
     const handleDelete = (id) => {
       deleteAlbum(id);
     };
-
+  
+    const handleEdit = (id) => {
+      history.push(`/edit-album/${id}`);
+    };
+  
     return (
       <div
         style={{
@@ -67,6 +72,7 @@ function CollectionPage() {
             <p>Release Date: {item.release_date}</p>
             <p>Tracklist: {item.tracklist}</p>
             <button onClick={() => handleDelete(item.id)}>Delete</button>
+            <button onClick={() => handleEdit(item.id)}>Edit</button>
           </div>
         )}
       </div>

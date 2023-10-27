@@ -18,6 +18,21 @@ router.get('/', (req, res) => {
   })
 });
 
+// GET route for specific album to edit
+router.get('/edit-album/:id', (req, res) => {
+    const id = req.params.id;
+    const queryText = `SELECT * FROM "collection" WHERE id = $1;`;
+    pool.query(queryText, [id])
+      .then((result) => {
+        res.send(result.rows);
+      })
+      .catch((error) => {
+        console.log('Error fetching album for editing: ', error);
+        res.sendStatus(500);
+      });
+  });
+
+// GET route for specific user's collection
 router.get('/:id', (req, res) => {
     let id = req.params.id;
     const queryText = `SELECT * FROM "collection" 
@@ -63,7 +78,7 @@ router.post('/', (req, res) => {
 
 
   // PUT route 
-
+  
 
   // DELETE route
 
