@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
+
 function CollectionPage() {
   const dispatch = useDispatch();
   const collection = useSelector((store) => store.albumList);
@@ -29,8 +31,8 @@ function CollectionPage() {
 
   // Sorting the collection based on the most recent albums added
   const mostRecentAlbums = userCollection
-    .sort((a, b) => new Date(b.added_date) - new Date(a.added_date))
-    .slice(0, 5);
+  .sort((a, b) => b.id - a.id)
+  .slice(0, 5);
 
   const deleteAlbum = (id) => {
     dispatch({ type: 'DELETE_ALBUM', payload: id });
@@ -57,7 +59,7 @@ function CollectionPage() {
         }}
         onClick={handleCardClick}
       >
-        <img src={item.image_url} alt={item.album_name} style={{ width: '100px', height: '100px' }} />
+        <img src={item.image_url} alt={item.album_name} style={{ width: '200px', height: '200px' }} />
         {showDetails && (
           <div>
             <p>Artist: {item.artist_name}</p>
