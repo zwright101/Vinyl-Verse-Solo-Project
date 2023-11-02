@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-
 function CollectionPage() {
   const dispatch = useDispatch();
   const collection = useSelector((store) => store.albumList);
@@ -31,8 +30,8 @@ function CollectionPage() {
 
   // Sorting the collection based on the most recent albums added
   const mostRecentAlbums = userCollection
-  .sort((a, b) => b.id - a.id)
-  .slice(0, 5);
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 5);
 
   const deleteAlbum = (id) => {
     dispatch({ type: 'DELETE_ALBUM', payload: id });
@@ -81,6 +80,10 @@ function CollectionPage() {
 
   return (
     <div>
+      <h1 style={{ textAlign: 'center' }}>Record Collection</h1>
+      <br />
+      <br />
+      <br />
       <h2>Recently Added</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {mostRecentAlbums.map((item, index) => (
