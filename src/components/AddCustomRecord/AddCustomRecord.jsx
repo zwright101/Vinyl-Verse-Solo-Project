@@ -34,6 +34,9 @@ function AddCustomRecord() {
   };
 
   return (
+    <div style={{ textAlign: 'center', padding: '20px' }}>
+        <h1>Add a Record!</h1>
+        <br />
     <Box
       component="form"
       sx={{
@@ -86,6 +89,7 @@ function AddCustomRecord() {
         </Button>
       </Box>
     </Box>
+    </div>
   );
 }
 
