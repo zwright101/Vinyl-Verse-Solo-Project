@@ -58,14 +58,15 @@ router.post('/', (req, res) => {
     console.log("User ID is: ", req.user.id);
     // Parse the date as a string
     const newReleaseDate = new Date(newRecord.releaseDate).toISOString();
-    const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist")
-                       VALUES ($1, $2, $3, $4, $5);`;
+    const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist", "album_artwork")
+                       VALUES ($1, $2, $3, $4, $5, $6);`;
     const queryValues = [
       req.user.id,
       newRecord.artistName,
       newRecord.albumName,
       newReleaseDate,
-      newRecord.tracklist
+      newRecord.tracklist,
+      newRecord.albumArtwork
     ];
     pool.query(queryText, queryValues)
       .then((result) => {
@@ -78,7 +79,7 @@ router.post('/', (req, res) => {
 
 
   // PUT route 
-  
+
 
   // DELETE route
 

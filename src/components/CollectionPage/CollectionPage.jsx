@@ -27,7 +27,7 @@ function CollectionPage() {
       return 1;
     }
     return 0;
-  });
+  }); 
 
   // Sorting the collection based on the most recent albums added
   const mostRecentAlbums = userCollection
@@ -64,15 +64,15 @@ function CollectionPage() {
         }}
         onClick={handleCardClick}
       >
-        <img src={item.image_url} alt={item.album_name} style={{ width: '200px', height: '200px' }} />
+        <img src={item.album_artwork} alt={item.album_name} style={{ width: '200px', height: '200px' }} />
         {showDetails && (
           <div>
             <p>Artist: {item.artist_name}</p>
             <p>Album: {item.album_name}</p>
             <p>Release Date: {item.release_date}</p>
             <p>Tracklist: {item.tracklist}</p>
-            <button onClick={() => handleDelete(item.id)}>Delete</button>
-            <button onClick={() => handleEdit(item.id)}>Edit</button>
+            <button onClick={() => handleDelete(item.id)}>Remove From Collection</button>
+            {/* <button onClick={() => handleEdit(item.id)}>Edit</button> */}
           </div>
         )}
       </div>

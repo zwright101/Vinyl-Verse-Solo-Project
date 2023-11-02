@@ -1,12 +1,11 @@
 .nav {
-  /* flex box layout */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin: 0 0 30px;
   background-color: #FFEDB6;
   overflow: hidden;
+  padding: 0 20px; 
 }
 
 .nav a {
@@ -17,7 +16,6 @@
   font-size: 24px;
   font-weight: 700;
   color: #192B3E;
-  padding-left: 10px;
   margin: 0;
 }
 
@@ -29,9 +27,6 @@
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
   border: none;
   cursor: pointer;
   outline: 0;
@@ -39,4 +34,15 @@
 
 .navLink:hover {
   background-color: #558E8F;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.Vinyl-Verse-Logo {
+  width: 150px;
+  height: 150px;
+  
 }

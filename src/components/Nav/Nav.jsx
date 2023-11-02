@@ -10,10 +10,10 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Vinyl Verse</h2>
-        {/* <div className="logo-container">
-        <img src="public/images/VinylVerseText.png" alt="Vinyl Verse Logo" className="Vinyl-Verse-Logo" />
-      </div> */}
+        <h2 className="nav-title"></h2>
+        <div className="logo-container">
+        <img src="/images/NEWVinylVerseLogo.png" alt="Vinyl Verse Logo" className="Vinyl-Verse-Logo" style={{ width: '150px', height: '150px'}}/>
+      </div>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
