@@ -66,7 +66,7 @@ router.post('/', (req, res) => {
       newRecord.albumName,
       newReleaseDate,
       newRecord.tracklist,
-      newRecord.albumArtwork
+      newRecord.imageUrl
     ];
     pool.query(queryText, queryValues)
       .then((result) => {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -10,6 +9,7 @@ function AddCustomRecord() {
   const [albumName, setAlbumName] = useState('');
   const [releaseDate, setReleaseDate] = useState('');
   const [tracklist, setTracklist] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   const dispatch = useDispatch();
 
@@ -25,70 +25,79 @@ function AddCustomRecord() {
       albumName,
       releaseDate,
       tracklist,
+      imageUrl,
     };
     dispatch({ type: 'ADD_NEW_RECORD', payload: newRecord });
     setArtistName('');
     setAlbumName('');
     setReleaseDate('');
     setTracklist('');
+    setImageUrl('');
   };
 
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
-        <h1>Add a Record!</h1>
-        <br />
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { mb: 2 },
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: 300,
-        margin: 'auto',
-      }}
-      onSubmit={submitRecord}
-    >
-      <TextField
-        label="Artist Name"
-        variant="outlined"
-        value={artistName}
-        onChange={(e) => setArtistName(e.target.value)}
-      />
-      <TextField
-        label="Album Name"
-        variant="outlined"
-        value={albumName}
-        onChange={(e) => setAlbumName(e.target.value)}
-      />
-      <TextField
-        label="Release Date"
-        variant="outlined"
-        value={releaseDate}
-        onChange={(e) => setReleaseDate(e.target.value)}
-      />
-       <TextField
-        label="Tracklist"
-        variant="outlined"
-        multiline 
-        rows={12}  
-        value={tracklist}
-        onChange={(e) => setTracklist(e.target.value)}
-      />
-      <Box sx={{ mt: 2 }}>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            backgroundColor: "#192B3E",
-            '&:hover': {
-              backgroundColor: "#0F1722",
-            },
-          }}
-        >
-          Add Record
-        </Button>
+      <h1>Add a Record!</h1>
+      <br />
+      <br />
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { mb: 2 },
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: 300,
+          margin: 'auto',
+        }}
+        onSubmit={submitRecord}
+      >
+        <TextField
+          label="Artist Name"
+          variant="outlined"
+          value={artistName}
+          onChange={(e) => setArtistName(e.target.value)}
+        />
+        <TextField
+          label="Album Name"
+          variant="outlined"
+          value={albumName}
+          onChange={(e) => setAlbumName(e.target.value)}
+        />
+        <TextField
+          label="Release Date"
+          variant="outlined"
+          value={releaseDate}
+          onChange={(e) => setReleaseDate(e.target.value)}
+        />
+        <TextField
+          label="Tracklist"
+          variant="outlined"
+          multiline
+          rows={12}
+          value={tracklist}
+          onChange={(e) => setTracklist(e.target.value)}
+        />
+        <TextField
+          label="Image URL"
+          variant="outlined"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+        <Box sx={{ mt: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: '#192B3E',
+              '&:hover': {
+                backgroundColor: '#0F1722',
+              },
+            }}
+          >
+            Add Record
+          </Button>
+        </Box>
       </Box>
-    </Box>
     </div>
   );
 }
