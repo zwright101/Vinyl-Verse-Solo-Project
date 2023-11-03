@@ -80,6 +80,32 @@ router.post('/', (req, res) => {
 
   // PUT route 
 
+  router.put('/:id', (req, res) => {
+    const updateId = req.params.id;
+    const updatedRecord = req.body;
+    const newReleaseDate = new Date(updatedRecord.releaseDate).toISOString();
+    const queryText = `UPDATE "collection" 
+                       SET "artist_name" = $1, "album_name" = $2, "release_date" = $3, "tracklist" = $4, "album_artwork" = $5 
+                       WHERE "id" = $6;`;
+    const queryValues = [
+      updatedRecord.artistName,
+      updatedRecord.albumName,
+      newReleaseDate,
+      updatedRecord.tracklist,
+      updatedRecord.imageUrl,
+      updateId
+    ];
+    pool.query(queryText, queryValues)
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log('Error UPDATING record: ', error);
+        res.sendStatus(500);
+      });
+  });
+  
+
 
   // DELETE route
 
