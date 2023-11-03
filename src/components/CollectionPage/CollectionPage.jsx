@@ -26,7 +26,7 @@ function CollectionPage() {
       return 1;
     }
     return 0;
-  }); 
+  });
 
   const mostRecentAlbums = userCollection
     .sort((a, b) => b.id - a.id)
@@ -61,23 +61,61 @@ function CollectionPage() {
           cursor: 'pointer',
         }}
       >
-        <img src={item.album_artwork} alt={item.album_name} style={{ width: '200px', height: '200px' }} onClick={handleCardClick} />
+        <img
+          src={item.album_artwork}
+          alt={item.album_name}
+          style={{ width: '200px', height: '200px' }}
+          onClick={handleCardClick}
+        />
         <Modal open={showModal} onClose={() => setShowModal(false)}>
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, backgroundColor: '#fef8e1', border: '2px solid #000', boxShadow: 24, p: 4, textAlign: 'center' }}>
-            <img src={item.album_artwork} alt={item.album_name} style={{ width: '200px', height: '200px' }} />
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 400,
+              backgroundColor: '#fef8e1',
+              border: '2px solid #000',
+              boxShadow: 24,
+              p: 4,
+              textAlign: 'center',
+            }}
+          >
+            <img
+              src={item.album_artwork}
+              alt={item.album_name}
+              style={{ width: '200px', height: '200px' }}
+            />
             <p>Artist: {item.artist_name}</p>
             <p>Album: {item.album_name}</p>
             <p>Release Date: {item.release_date}</p>
-            <p>Tracklist: {item.tracklist}</p>
+            <p>Tracklist:</p>
+            <ul style={{ textAlign: 'left' }}>
+              {item.tracklist.split(',').map((track, index) => (
+                <li key={index}>{track.trim()}</li>
+              ))}
+            </ul>
             <div style={{ margin: '10px 0' }}>
-            <Button variant="contained" onClick={() => handleDelete(item.id)} sx={{ backgroundColor: '#192B3E','&:hover': { backgroundColor: '#0F1722'},}}>Remove from Collection</Button>
+              <Button
+                variant="contained"
+                onClick={() => handleDelete(item.id)}
+                sx={{ backgroundColor: '#192B3E', '&:hover': { backgroundColor: '#0F1722' } }}
+              >
+                Remove from Collection
+              </Button>
             </div>
             <div style={{ margin: '10px 0' }}>
-            <Button variant="contained" onClick={() => handleEdit(item.id)} sx={{ backgroundColor: '#192B3E','&:hover': { backgroundColor: '#0F1722'},}}>Edit</Button>
+              <Button
+                variant="contained"
+                onClick={() => handleEdit(item.id)}
+                sx={{ backgroundColor: '#192B3E', '&:hover': { backgroundColor: '#0F1722' } }}
+              >
+                Edit
+              </Button>
             </div>
           </div>
         </Modal>
-
       </div>
     );
   };
