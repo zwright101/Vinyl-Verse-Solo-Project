@@ -69,8 +69,12 @@ function CollectionPage() {
             <p>Album: {item.album_name}</p>
             <p>Release Date: {item.release_date}</p>
             <p>Tracklist: {item.tracklist}</p>
-            <Button variant="contained" onClick={() => handleDelete(item.id)}>Remove From Collection</Button>
-            <Button variant="contained" onClick={() => handleEdit(item.id)}>Edit</Button>
+            <div style={{ margin: '10px 0' }}>
+            <Button variant="contained" onClick={() => handleDelete(item.id)} sx={{ backgroundColor: '#192B3E','&:hover': { backgroundColor: '#0F1722'},}}>Remove from Collection</Button>
+            </div>
+            <div style={{ margin: '10px 0' }}>
+            <Button variant="contained" onClick={() => handleEdit(item.id)} sx={{ backgroundColor: '#192B3E','&:hover': { backgroundColor: '#0F1722'},}}>Edit</Button>
+            </div>
           </div>
         </Modal>
 
