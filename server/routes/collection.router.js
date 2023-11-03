@@ -32,6 +32,7 @@ router.get('/edit-album/:id', (req, res) => {
       });
   });
 
+
 // GET route for specific user's collection
 router.get('/:id', (req, res) => {
     let id = req.params.id;
