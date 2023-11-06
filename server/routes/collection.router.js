@@ -59,6 +59,7 @@ router.post('/', (req, res) => {
     console.log("User ID is: ", req.user.id);
     // Parse the date as a string
     const newReleaseDate = new Date(newRecord.releaseDate).toISOString();
+    console.log('New release date: ', newReleaseDate);
     const queryText = `INSERT INTO "collection" ("user_id", "artist_name", "album_name", "release_date", "tracklist", "album_artwork")
                        VALUES ($1, $2, $3, $4, $5, $6);`;
     const queryValues = [

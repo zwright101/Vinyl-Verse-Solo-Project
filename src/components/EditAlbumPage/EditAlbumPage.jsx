@@ -33,28 +33,34 @@ function EditAlbumPage() {
     setTracklist(event.target.value);
   };
 
+  const handleImageUrlChange = (event) => {
+    setImageUrl(event.target.value);
+  }
+
   const handleSave = () => {
+    const formattedReleaseDate = new Date(releaseDate).toISOString();
     const updatedAlbum = {
-      id,
-      artist_name: artistName,
-      album_name: albumName,
-      release_date: releaseDate,
-      tracklist,
-      imageUrl: imageUrl
+      artistName: artistName,
+      albumName: albumName,
+      releaseDate: formattedReleaseDate,
+      tracklist: tracklist,
+      imageUrl: imageUrl,
+      id: id,
     };
-
-    axios.put(`/edit-album/${id}`, updatedAlbum)
-    .then((response) => {
-    history.push('/collection');
-    })
-    .catch((error) => {
-      console.error('Error updating album:', error);
-    });
-
-
-    dispatch({ type: 'UPDATE_EDITED_ALBUM', payload: updatedAlbum });
-    history.push('/collection');
+  
+    axios
+      .put(`/api/collection/edit-album/${id}`, updatedAlbum)
+      .then((response) => {
+        dispatch({ type: 'UPDATE_EDITED_ALBUM', payload: updatedAlbum });
+        history.push('/collection');
+      })
+      .catch((error) => {
+        console.error('Error updating album:', error);
+      });
   };
+  
+
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h2>Edit your Album</h2>
@@ -75,6 +81,10 @@ function EditAlbumPage() {
         <label>
           Tracklist:
           <input type="text" value={tracklist} onChange={handleTracklistChange} />
+        </label>
+        <label>
+          Album Artwork:
+          <input type="text" value={imageUrl} onChange={handleImageUrlChange} />
         </label>
         <button onClick={handleSave}>Save</button> {/* Add the save button with the onClick event handler */}
       </div>

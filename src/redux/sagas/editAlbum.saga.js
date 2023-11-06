@@ -4,7 +4,7 @@ import axios from "axios";
 function* updateAlbum(action) {
   try {
     const { id, updatedAlbum } = action.payload;
-    yield axios.put(`/api/collection/${id}`, updatedAlbum);
+    yield axios.put(`/api/collection`, action.payload);
   } catch (error) {
     console.error('Error updating album:', error);
   }

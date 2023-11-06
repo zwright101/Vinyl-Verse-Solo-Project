@@ -16,7 +16,14 @@ function* getAlbumList() {
 
 // EDIT
 function* editAlbum(action) {
-    
+    try {
+        const updatedAlbum = action.payload;
+        yield axios.put(`/api/collection/edit-album/${updatedAlbum.id}`, updatedAlbum);
+        yield put({ type: 'FETCH_ALBUM_LIST' }); // Refresh the album list after editing
+    } catch (error) {
+        console.log('Error in editAlbum', error);
+        alert('Failed to edit album');
+    }
 }
 
 // DELETE
@@ -34,6 +41,7 @@ function* deleteAlbum(action) {
 function* collectionSaga() {
     yield takeLatest('FETCH_ALBUM_LIST', getAlbumList);
     yield takeLatest('DELETE_ALBUM', deleteAlbum);
+    yield takeLatest('EDIT_ALBUM', editAlbum); // Add this line to call editAlbum on 'EDIT_ALBUM' action
 }
 
 export default collectionSaga;
