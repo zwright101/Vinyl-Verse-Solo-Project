@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 function EditAlbumPage() {
   const { id } = useParams();
@@ -59,37 +62,70 @@ function EditAlbumPage() {
       });
   };
   
-
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h2>Edit your Album</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {album.album_artwork && <img src={album.album_artwork} alt={album.album_name} style={{ width: '200px', height: '200px' }} />}
-        <label>
-          Artist:
-          <input type="text" value={artistName} onChange={handleArtistNameChange} />
-        </label>
-        <label>
-          Album:
-          <input type="text" value={albumName} onChange={handleAlbumNameChange} />
-        </label>
-        <label>
-          Release Date:
-          <input type="text" value={releaseDate} onChange={handleReleaseDateChange} />
-        </label>
-        <label>
-          Tracklist:
-          <input type="text" value={tracklist} onChange={handleTracklistChange} />
-        </label>
-        <label>
-          Album Artwork:
-          <input type="text" value={imageUrl} onChange={handleImageUrlChange} />
-        </label>
-        <button onClick={handleSave}>Save</button> {/* Add the save button with the onClick event handler */}
-      </div>
-    </div>
-  );
+    return (
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+        <h2>Edit your Album</h2>
+        <br />
+        <br />
+        <Box
+            component="form"
+            sx={{
+            '& .MuiTextField-root': { mb: 2 },
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: 300,
+            margin: 'auto',
+            }}
+        >
+            <TextField
+            label="Artist Name"
+            variant="outlined"
+            value={artistName}
+            onChange={handleArtistNameChange}
+            />
+            <TextField
+            label="Album Name"
+            variant="outlined"
+            value={albumName}
+            onChange={handleAlbumNameChange}
+            />
+            <TextField
+            label="Release Date"
+            variant="outlined"
+            value={releaseDate}
+            onChange={handleReleaseDateChange}
+            />
+            <TextField
+            label="Tracklist"
+            variant="outlined"
+            multiline
+            rows={12}
+            value={tracklist}
+            onChange={handleTracklistChange}
+            />
+            <TextField
+            label="Image URL"
+            variant="outlined"
+            value={imageUrl}
+            onChange={handleImageUrlChange}
+            />
+            <Box sx={{ mt: 2 }}>
+            <Button
+                variant="contained"
+                onClick={handleSave}
+                sx={{
+                backgroundColor: '#192B3E',
+                '&:hover': {
+                    backgroundColor: '#0F1722',
+                },
+                }}
+            >
+                Save
+            </Button>
+            </Box>
+        </Box>
+        </div>
+    );
 }
 
 export default EditAlbumPage;
