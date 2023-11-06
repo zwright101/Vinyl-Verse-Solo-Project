@@ -1,6 +1,6 @@
 const initialState = {
   collection: [],
-  editedAlbum: null, // Add this property to store the album being edited
+  editedAlbum: null,
 };
 
 const addRecordReducer = (state = initialState, action) => {
@@ -14,6 +14,16 @@ const addRecordReducer = (state = initialState, action) => {
       return {
         ...state,
         editedAlbum: action.payload,
+      };
+    case 'UPDATE_EDITED_ALBUM':
+      const updatedAlbum = action.payload;
+      const updatedCollection = state.collection.map((item) =>
+        item.id === updatedAlbum.id ? { ...item, ...updatedAlbum } : item
+      );
+      return {
+        ...state,
+        collection: updatedCollection,
+        editedAlbum: updatedAlbum,
       };
     default:
       return state;
