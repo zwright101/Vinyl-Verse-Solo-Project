@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Modal, Button } from '@mui/material';
 
+
+
 function CollectionPage() {
   const dispatch = useDispatch();
   const collection = useSelector((store) => store.albumList);
@@ -111,7 +113,7 @@ function CollectionPage() {
                 onClick={() => handleEdit(item.id)}
                 sx={{ backgroundColor: '#192B3E', '&:hover': { backgroundColor: '#0F1722' } }}
               >
-                Edit
+                Edit Record
               </Button>
             </div>
           </div>
@@ -119,6 +121,8 @@ function CollectionPage() {
       </div>
     );
   };
+
+  
 
   return (
     <div>

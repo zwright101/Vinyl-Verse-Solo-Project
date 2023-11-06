@@ -153,7 +153,7 @@ function App() {
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
-            path="/edit-album"
+            path="/edit-album/:id"
           >
             <EditAlbumPage />
           </ProtectedRoute>

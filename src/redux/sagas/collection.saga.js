@@ -14,6 +14,11 @@ function* getAlbumList() {
     }
 }
 
+// EDIT
+function* editAlbum(action) {
+    
+}
+
 // DELETE
 function* deleteAlbum(action) {
     try {

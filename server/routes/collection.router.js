@@ -81,12 +81,16 @@ router.post('/', (req, res) => {
 
   // PUT route 
 
-  router.put('/:id', (req, res) => {
+router.put('/edit-album/:id', (req, res) => {
     const updateId = req.params.id;
     const updatedRecord = req.body;
     const newReleaseDate = new Date(updatedRecord.releaseDate).toISOString();
     const queryText = `UPDATE "collection" 
-                       SET "artist_name" = $1, "album_name" = $2, "release_date" = $3, "tracklist" = $4, "album_artwork" = $5 
+                       SET "artist_name" = $1, 
+                           "album_name" = $2, 
+                           "release_date" = $3, 
+                           "tracklist" = $4, 
+                           "album_artwork" = $5 
                        WHERE "id" = $6;`;
     const queryValues = [
       updatedRecord.artistName,
@@ -105,6 +109,7 @@ router.post('/', (req, res) => {
         res.sendStatus(500);
       });
   });
+  
   
 
 

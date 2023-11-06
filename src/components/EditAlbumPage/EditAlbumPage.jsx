@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
-import {useSelector} from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
-function EditAlbumPage(props) {
-  // Using hooks we're creating local state for a "heading" variable with
-  // a default value of 'Functional Component'
-  const store = useSelector((store) => store);
-  const [heading, setHeading] = useState('Edit your Album');
+function EditAlbumPage() {
+  const { id } = useParams();
+  const albumList = useSelector((store) => store.albumList);
+  const album = albumList.find((item) => item.id === parseInt(id));
+  
 
   return (
-    <div>
-      <h2>{heading}</h2>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h2>Edit your Album</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {album.album_artwork && <img src={album.album_artwork} alt={album.album_name} style={{ width: '200px', height: '200px' }} />}
+        <p>Artist: {album.artist_name}</p>
+        <p>Album: {album.album_name}</p>
+        <p>Release Date: {album.release_date}</p>
+        <p>Tracklist:</p>
+        <ul style={{ textAlign: 'left' }}>
+          {album.tracklist.split(',').map((track, index) => (
+            <li key={index}>{track.trim()}</li>
+          ))}
+        </ul>
+        {/* Add edit functionality here */}
+      </div>
     </div>
   );
 }
 
 export default EditAlbumPage;
-

@@ -4,7 +4,7 @@ import axios from "axios";
 function* fetchAlbumForEditing(action) {
     try {
       const albumId = action.payload;
-      const response = yield axios.get(`/api/collection/edit-album/${albumId}`);
+      const response = yield axios.get(`/api/collection/${albumId}`);
       yield put({ type: 'SET_EDITED_ALBUM', payload: response.data });
     } catch (error) {
       console.error('Error fetching album for editing:', error);
@@ -13,7 +13,7 @@ function* fetchAlbumForEditing(action) {
 
   
   function* editAlbumSaga() {
-    yield takeEvery('FETCH_ALBUM_FOR_EDITING', fetchAlbumForEditing);
+    yield takeEvery('EDIT_ALBUM', fetchAlbumForEditing);
   }
   
   export default editAlbumSaga;
