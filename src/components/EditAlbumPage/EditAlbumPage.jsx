@@ -18,7 +18,8 @@ function EditAlbumPage() {
   const [albumName, setAlbumName] = useState(album.album_name);
   const [releaseDate, setReleaseDate] = useState(album.release_date);
   const [tracklist, setTracklist] = useState(album.tracklist);
-  const [imageUrl, setImageUrl] = useState(album.imageUrl);
+  const [imageUrl, setImageUrl] = useState(album.album_artwork);
+//   console.log('Existing image url', album.imageUrl);
 
   const handleArtistNameChange = (event) => {
     setArtistName(event.target.value);

@@ -24,13 +24,16 @@ router.get('/edit-album/:id', (req, res) => {
     const queryText = `SELECT * FROM "collection" WHERE id = $1;`;
     pool.query(queryText, [id])
       .then((result) => {
-        res.send(result.rows);
+        const albumData = result.rows[0];
+        console.log('Fetched album data:', albumData);
+        res.send(albumData);
       })
       .catch((error) => {
         console.log('Error fetching album for editing: ', error);
         res.sendStatus(500);
       });
   });
+  
 
 
 // GET route for specific user's collection
@@ -48,6 +51,7 @@ router.get('/:id', (req, res) => {
         res.sendStatus(500)
     })
 })
+
 
 /**
  * POST route template
