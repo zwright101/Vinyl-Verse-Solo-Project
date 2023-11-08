@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function AddCustomRecord() {
   const [artistName, setArtistName] = useState('');
@@ -10,6 +12,8 @@ function AddCustomRecord() {
   const [releaseDate, setReleaseDate] = useState('');
   const [tracklist, setTracklist] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const dispatch = useDispatch();
 
@@ -33,6 +37,19 @@ function AddCustomRecord() {
     setReleaseDate('');
     setTracklist('');
     setImageUrl('');
+    handleSnackbarOpen('Record added to your collection!');
+  };
+
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setOpenSnackbar(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
   };
 
   return (
@@ -98,6 +115,11 @@ function AddCustomRecord() {
           </Button>
         </Box>
       </Box>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
