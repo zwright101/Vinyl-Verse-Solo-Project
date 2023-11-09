@@ -55,15 +55,18 @@ function AddCustomRecord() {
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
       <h1>Add a Record!</h1>
-      <p>
-        When adding your record, please include the Artist Name, Album Name, and format your 
-        release date as MM/DD/YYYY or MM/YYYY. Also feel free to add the tracklist if you wish, 
-        as well as include an image URL from the web to display your album artwork! 
-      </p>
-      <p>
-        Don't worry, if you want to add just the Artist and Album and finish the rest later, 
-        you can always come back and edit the details later!
-      </p>
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <p>
+          When adding your record, please include the artist name, album name, and format your 
+          release date as MM/DD/YYYY, MM/YYYY, or spelling out the month and year. Also feel free 
+          to add the tracklist if you wish, as well as include an image URL from the web to display
+          the albums artwork! 
+        </p>
+        <p>
+          Don't worry, if you want to add just the artist and album and add the rest later, 
+          you can always come back and edit the details when you so wish to do so!
+        </p>
+      </div>
       <br />
       <br />
       <Box
