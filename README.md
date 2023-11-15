@@ -7,7 +7,7 @@ Duration: 3 Weeks
 
 Vinyl Verse is a social media lite app where lovers of music and collectors of vinyl records can sign up and begin adding records to their account to display as part of their digital collection!
 
-To see the fully functional site, please visit: https://www.vinylverse.io/#/home
+To see the fully functional site, please visit: https://www.vinylverse.io/
 
 
 ### Prerequisites
