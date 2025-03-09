@@ -1,31 +1,32 @@
-const express = require('express');
-const pool = require('../modules/pool');
+const express = require("express");
+const axios = require("axios");
+require("dotenv").config(); // Ensure environment variables are loaded
+
 const router = express.Router();
-const axios = require('axios');
 
-const discogs_api_key = process.env.DISCOGS_API_KEY;
+const DISCOGS_API_KEY = process.env.DISCOGS_API_KEY;
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-  // GET route code here
-    let search = req.query.search;
-    axios.get(`https://api.discogs.com/database/search?q=${search}&api_key=${discogs_api_key}&limit=5`)
-    .then((response) => {
-        res.send(response.data.data)
-    })
-    .catch((error) => {
-        console.log("GET /albums fail: ", error);
-        res.sendStatus(500)
-    })
-});
 
 /**
- * POST route template
+ * GET route to search Discogs API
  */
-router.post('/', (req, res) => {
-  // POST route code here
+router.get("/", async (req, res) => {
+  const search = req.query.search;
+  const limit = req.query.limit || 5; // Allow dynamic limit, default to 5
+
+  if (!search) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.discogs.com/database/search?q=${encodeURIComponent(search)}&type=release&token=${DISCOGS_API_KEY}&limit=${limit}`
+    );
+    res.json(response.data.results); // Send back search results
+  } catch (error) {
+    console.error("GET /albums fail:", error.response ? error.response.data : error);
+    res.status(500).json({ error: "Failed to fetch data from Discogs" });
+  }
 });
 
 module.exports = router;
