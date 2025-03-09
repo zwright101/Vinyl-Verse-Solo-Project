@@ -1,43 +1,58 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function AddCustomRecord() {
-  const [artistName, setArtistName] = useState('');
-  const [albumName, setAlbumName] = useState('');
-  const [releaseDate, setReleaseDate] = useState('');
-  const [tracklist, setTracklist] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [album, setAlbum] = useState({
+    artistName: "",
+    albumName: "",
+    releaseDate: "",
+    imageUrl: "",
+  });
+
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const dispatch = useDispatch();
 
-  const addRecord = (newRecord) => ({
-    type: 'ADD_RECORD',
-    payload: newRecord,
-  });
+  // Search for albums using Discogs API
+  const searchAlbums = async () => {
+    if (!searchQuery) return;
 
+    try {
+      const response = await fetch(`/albums?search=${searchQuery}&limit=10`);
+      const data = await response.json();
+      setSearchResults(data); // Store search results
+    } catch (error) {
+      console.error("Error fetching albums:", error);
+    }
+  };
+
+  // Autofill the form when a user selects an album
+  const handleAlbumSelect = (selectedAlbum) => {
+    setAlbum({
+      artistName: selectedAlbum.artist || "Unknown",
+      albumName: selectedAlbum.title,
+      releaseDate: selectedAlbum.year || "N/A",
+      imageUrl: selectedAlbum.cover_image || "",
+      tracklist: selectedAlbum.tracklist || [],
+    });
+    setSearchResults([]); // Clear search results after selection
+  };
+
+  // Submit the selected album to the collection
   const submitRecord = (e) => {
     e.preventDefault();
-    const newRecord = {
-      artistName,
-      albumName,
-      releaseDate,
-      tracklist,
-      imageUrl,
-    };
-    dispatch({ type: 'ADD_NEW_RECORD', payload: newRecord });
-    setArtistName('');
-    setAlbumName('');
-    setReleaseDate('');
-    setTracklist('');
-    setImageUrl('');
-    handleSnackbarOpen('Record added to your collection!');
+    dispatch({ type: "ADD_NEW_RECORD", payload: album });
+
+    setAlbum({ artistName: "", albumName: "", releaseDate: "", imageUrl: "" });
+    handleSnackbarOpen("Record added to your collection!");
   };
 
   const handleSnackbarOpen = (message) => {
@@ -46,87 +61,81 @@ function AddCustomRecord() {
   };
 
   const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    if (reason === "clickaway") return;
     setOpenSnackbar(false);
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
+    <div style={{ textAlign: "center", padding: "20px" }}>
       <h1>Add a Record!</h1>
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <p>
-          When adding your record, please include the artist name, album name, and format your 
-          release date as MM/DD/YYYY, MM/YYYY, or spelling out the month and year. Also feel free 
-          to add the tracklist if you wish, as well as include an image URL from the web to display
-          the albums artwork! 
-        </p>
-        <p>
-          Don't worry, if you want to add just the artist and album and add the rest later, 
-          you can always come back and edit the details when you so wish to do so!
-        </p>
-      </div>
+
+      {/* Search Box for Discogs API */}
+      <Box sx={{ maxWidth: 400, margin: "auto" }}>
+        <TextField
+          label="Search Album"
+          variant="outlined"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          fullWidth
+        />
+        <Button onClick={searchAlbums} variant="contained" sx={{ mt: 1 }}>
+          Search
+        </Button>
+      </Box>
+
+      {/* Display Search Results */}
+      {searchResults.length > 0 && (
+        <Box sx={{ maxWidth: 400, margin: "auto", mt: 2 }}>
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            {searchResults.map((album) => (
+              <li
+                key={album.id}
+                style={{
+                  cursor: "pointer",
+                  padding: "10px",
+                  borderBottom: "1px solid #ddd",
+                }}
+                onClick={() => handleAlbumSelect(album)}
+              >
+                <strong>{album.title}</strong> ({album.year})
+                {album.cover_image && (
+                  <img
+                    src={album.cover_image}
+                    alt={album.title}
+                    style={{ width: "50px", marginLeft: "10px" }}
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+        </Box>
+      )}
+
       <br />
-      <br />
+
+      {/* Manual Form Entry (Now Autofilled) */}
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { mb: 2 },
-          display: 'flex',
-          flexDirection: 'column',
+          "& .MuiTextField-root": { mb: 2 },
+          display: "flex",
+          flexDirection: "column",
           maxWidth: 300,
-          margin: 'auto',
+          margin: "auto",
         }}
         onSubmit={submitRecord}
       >
-        <TextField
-          label="Artist Name"
-          variant="outlined"
-          value={artistName}
-          onChange={(e) => setArtistName(e.target.value)}
-        />
-        <TextField
-          label="Album Name"
-          variant="outlined"
-          value={albumName}
-          onChange={(e) => setAlbumName(e.target.value)}
-        />
-        <TextField
-          label="Release Date"
-          variant="outlined"
-          value={releaseDate}
-          onChange={(e) => setReleaseDate(e.target.value)}
-        />
-        <TextField
-          label="Tracklist"
-          variant="outlined"
-          multiline
-          rows={12}
-          value={tracklist}
-          onChange={(e) => setTracklist(e.target.value)}
-        />
-        <TextField
-          label="Image URL"
-          variant="outlined"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
+        <TextField label="Artist Name" variant="outlined" value={album.artistName} readOnly />
+        <TextField label="Album Name" variant="outlined" value={album.albumName} readOnly />
+        <TextField label="Release Date" variant="outlined" value={album.releaseDate} readOnly />
+        {album.imageUrl && <img src={album.imageUrl} alt="Album Cover" style={{ maxWidth: "100px", margin: "10px auto" }} />}
         <Box sx={{ mt: 2 }}>
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              backgroundColor: '#192B3E',
-              '&:hover': {
-                backgroundColor: '#0F1722',
-              },
-            }}
-          >
+          <Button type="submit" variant="contained">
             Add Record
           </Button>
         </Box>
       </Box>
+
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
           {snackbarMessage}
