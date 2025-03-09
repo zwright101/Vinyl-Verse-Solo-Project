@@ -93,11 +93,16 @@ function CollectionPage() {
             <p>Album: {item.album_name}</p>
             <p>Release Date: {item.release_date}</p>
             <p>Tracklist:</p>
-            <ul style={{ textAlign: 'left' }}>
-              {item.tracklist.split(',').map((track, index) => (
-                <li key={index}>{track.trim()}</li>
-              ))}
+            {item.tracklist && item.tracklist.length > 0 ? (
+              <ul style={{ textAlign: 'left' }}>
+                {(typeof item.tracklist === "string" ? item.tracklist.split(',') : item.tracklist).map((track, index) => (
+                  <li key={index}>{track.trim()}</li>
+                ))}
             </ul>
+          ) : (
+          <p>No tracklist available</p>
+          )}
+
             <div style={{ margin: '10px 0' }}>
               <Button
                 variant="contained"
