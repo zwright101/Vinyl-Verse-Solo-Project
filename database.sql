@@ -14,7 +14,7 @@ CREATE TABLE "collection" (
     "user_id" INT,
     "artist_name" VARCHAR (100) NOT NULL,
     "album_name" VARCHAR (100) NOT NULL,
-    "release_date" DATE,
+    "release_date" TEXT,
     "tracklist" TEXT,
     "album_artwork" VARCHAR (2000)
 );

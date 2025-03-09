@@ -16,7 +16,17 @@ router.get("/", async (req, res) => {
   try {
     // Step 1: Search for albums
     const searchResponse = await axios.get(
-      `https://api.discogs.com/database/search?q=${encodeURIComponent(search)}&type=release&token=${DISCOGS_API_KEY}&limit=${limit}`
+      `https://api.discogs.com/database/search`, {
+        params: {
+          q: search,
+          type: "release",
+          token: DISCOGS_API_KEY,
+          format: "Vinyl", // Prioritize vinyl records
+          per_page: limit,
+          sort: "year",
+          sort_order: "desc"
+        }
+      }
     );
 
     const albums = searchResponse.data.results;
@@ -32,14 +42,13 @@ router.get("/", async (req, res) => {
 
           return {
             id: album.id,
-            title: album.title,
-            artist: details.artists?.[0]?.name || "Unknown Artist",
-            year: details.released || details.year || "Unknown",
+            title: album.title.replace(/ *\([^)]*\) */g, "").trim(), // Remove extra characters in parentheses
+            artist: details.artists?.[0]?.name.replace(/\d+$/, "").trim() || "Unknown Artist", // Remove numbers from artist names
+            year: details.year || "N/A",
             cover_image: album.cover_image || "",
-            tracklist: details.tracklist
-              ? details.tracklist.map((track) => track.title)
-              : [],
+            tracklist: details.tracklist ? details.tracklist.map((track) => track.title) : [],
           };
+          
         } catch (error) {
           console.error(`Error fetching tracklist for ${album.title}:`, error);
           return null;
