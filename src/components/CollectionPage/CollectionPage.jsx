@@ -96,13 +96,13 @@ function CollectionPage() {
             {item.tracklist && item.tracklist.length > 0 ? (
               <ul style={{ textAlign: 'left' }}>
                 {(typeof item.tracklist === "string" ? item.tracklist.split(',') : item.tracklist).map((track, index) => (
-                  <li key={index}>{track.trim()}</li>
+                  <li key={index}>{String(track).replace(/['"{}']/g, "").trim()}</li>
                 ))}
             </ul>
           ) : (
           <p>No tracklist available</p>
           )}
-
+          
             <div style={{ margin: '10px 0' }}>
               <Button
                 variant="contained"
