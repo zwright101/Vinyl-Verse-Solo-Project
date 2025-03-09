@@ -34,23 +34,34 @@ function AddCustomRecord() {
     }
   };
 
-  // Autofill the form when a user selects an album
+  // Autofill fields when a user selects an album, but allow manual editing
   const handleAlbumSelect = (selectedAlbum) => {
-    setAlbum({
+    setAlbum((prevAlbum) => ({
+      ...prevAlbum, // Keep any manually typed values
       artistName: selectedAlbum.artist || "Unknown",
       albumName: selectedAlbum.title,
-      releaseDate: selectedAlbum.year || "N/A",
+      releaseDate: selectedAlbum.year ? selectedAlbum.year.toString() : "",
       imageUrl: selectedAlbum.cover_image || "",
-      tracklist: selectedAlbum.tracklist || [],
-    });
+      tracklist: selectedAlbum.tracklist ? selectedAlbum.tracklist.join(",") : "",
+    }));
     setSearchResults([]); // Clear search results after selection
   };
 
-  // Submit the selected album to the collection
+  // Update specific field in album object when typing manually
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAlbum((prevAlbum) => ({
+      ...prevAlbum,
+      [name]: value,
+    }));
+  };
+
+  // Submit the selected or manually entered album to the collection
   const submitRecord = (e) => {
     e.preventDefault();
     dispatch({ type: "ADD_NEW_RECORD", payload: album });
 
+    // Reset form fields
     setAlbum({ artistName: "", albumName: "", releaseDate: "", imageUrl: "" });
     handleSnackbarOpen("Record added to your collection!");
   };
@@ -68,6 +79,7 @@ function AddCustomRecord() {
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
       <h1>Add a Record!</h1>
+      <p>Enter the artist name or album title to find your record</p>
 
       {/* Search Box for Discogs API */}
       <Box sx={{ maxWidth: 400, margin: "auto" }}>
@@ -112,8 +124,11 @@ function AddCustomRecord() {
       )}
 
       <br />
+      
 
-      {/* Manual Form Entry (Now Autofilled) */}
+      <p>Or manually add your record information here! </p>
+
+      {/* Manual Form Entry (Now Autofilled but Editable) */}
       <Box
         component="form"
         sx={{
@@ -125,10 +140,44 @@ function AddCustomRecord() {
         }}
         onSubmit={submitRecord}
       >
-        <TextField label="Artist Name" variant="outlined" value={album.artistName} readOnly />
-        <TextField label="Album Name" variant="outlined" value={album.albumName} readOnly />
-        <TextField label="Release Date" variant="outlined" value={album.releaseDate} readOnly />
-        {album.imageUrl && <img src={album.imageUrl} alt="Album Cover" style={{ maxWidth: "100px", margin: "10px auto" }} />}
+        <TextField
+          label="Artist Name"
+          variant="outlined"
+          name="artistName"
+          value={album.artistName}
+          onChange={handleInputChange}
+        />
+        <TextField
+          label="Album Name"
+          variant="outlined"
+          name="albumName"
+          value={album.albumName}
+          onChange={handleInputChange}
+        />
+        <TextField
+          label="Release Date (Year)"
+          variant="outlined"
+          name="releaseDate"
+          value={album.releaseDate}
+          onChange={handleInputChange}
+        />
+        <TextField
+          label="Image URL"
+          variant="outlined"
+          name="imageUrl"
+          value={album.imageUrl}
+          onChange={handleInputChange}
+        />
+
+        {/* Display Image if URL is Provided */}
+        {album.imageUrl && (
+          <img
+            src={album.imageUrl}
+            alt="Album Cover"
+            style={{ maxWidth: "100px", margin: "10px auto" }}
+          />
+        )}
+
         <Box sx={{ mt: 2 }}>
           <Button type="submit" variant="contained">
             Add Record
