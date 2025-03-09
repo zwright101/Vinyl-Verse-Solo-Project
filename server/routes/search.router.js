@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
             id: album.id,
             title: album.title,
             artist: details.artists?.[0]?.name || "Unknown Artist",
-            year: details.year || "N/A",
+            year: details.released || details.year || "Unknown",
             cover_image: album.cover_image || "",
             tracklist: details.tracklist
               ? details.tracklist.map((track) => track.title)
